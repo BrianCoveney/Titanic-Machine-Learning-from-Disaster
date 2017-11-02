@@ -1,6 +1,7 @@
 from sklearn.neighbors import KNeighborsClassifier
 import pandas as pd
 from sklearn.preprocessing import Imputer
+from sklearn import preprocessing
 
 
 # Function will run each of the classifiers using cross fold validation
@@ -25,6 +26,11 @@ def removeFeatures(df_tr, df_ts):
     encodeCategoricalVariables(df_train)
     encodeCategoricalVariables(df_test)
 
+    # 65.5% before normalisation
+    # 76.1% after normalisation
+    normaliseFeatureVectors(df_train)
+    normaliseFeatureVectors(df_test)
+
     return df_train, df_test
 
 
@@ -41,6 +47,11 @@ def encodeCategoricalVariables(df):
     df['Sex'] = df['Sex'].map(map_for_sex)
     map_embarked = {'S': 0, 'C': 1, 'Q': 2}
     df['Embarked'] = df['Embarked'].map(map_embarked)
+
+
+def normaliseFeatureVectors(df):
+    scale_obj = preprocessing.MinMaxScaler()
+    df[['Age', 'SibSp', 'Parch', 'Fare', 'Pclass']] = scale_obj.fit_transform(df[['Age', 'SibSp', 'Parch', 'Fare', 'Pclass']])
 
 
 def main():

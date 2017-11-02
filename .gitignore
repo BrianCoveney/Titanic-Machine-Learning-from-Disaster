@@ -1,0 +1,16 @@
+
+# Linux
+.*
+!.gitignore
+*~
+
+# PyCharm
+.idea
+.iml
+
+# Django
+*.log
+*.pot
+*.pyc
+local_settings.py
+site_media/
